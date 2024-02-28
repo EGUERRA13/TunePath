@@ -1,5 +1,5 @@
 
-import { NavLink } from 'react-router-dom'
+import Link from 'next/link'
 import styles from "./page.module.css";
 import logo from './tplogov1.png'
 import Image from 'next/image'
@@ -15,13 +15,13 @@ const Navbar = () => {
           <div className={styles.navelements}>
             <ul>
               <li>
-                <NavLink to="/">Home</NavLink>
+                <Link href="/">Discography Flowchart</Link>
               </li>
               <li>
-                <NavLink to="/Image To Music">Image To Music</NavLink>
+                <Link href="/imagetomusic">Image To Music</Link>
               </li>
               <li>
-                <NavLink to="/about">About</NavLink>
+                <Link href="/about">About</Link>
               </li>
             </ul>
           </div>
