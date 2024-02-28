@@ -1,31 +1,27 @@
 
 import { NavLink } from 'react-router-dom'
 import styles from "./page.module.css";
+import logo from './tplogov1.png'
+import Image from 'next/image'
 
 
 const Navbar = () => {
     return (
-      <nav className="navbar">
-        <div className="container">
-          <div className="logo">
-            <image ></image>
+      <nav className={styles.navbar}>
+        <div className={styles.container}>
+          <div className={styles.logo}>
+            <Image src={logo} width={50} alt="TP logo" />
           </div>
-          <div className="nav-elements">
+          <div className={styles.navelements}>
             <ul>
               <li>
                 <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <NavLink to="/blog">Blog</NavLink>
-              </li>
-              <li>
-                <NavLink to="/projects">Projects</NavLink>
+                <NavLink to="/Image To Music">Image To Music</NavLink>
               </li>
               <li>
                 <NavLink to="/about">About</NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact">Contact</NavLink>
               </li>
             </ul>
           </div>

@@ -2,14 +2,20 @@
 
 import styles from "./page.module.css";
 import { useState } from 'react'
+import { BrowserRouter } from "react-router-dom"
+import Navbar from './navbar'
 
 
 export default function Home() {
-  return (
+  return (    
+
+    <BrowserRouter>
+      <Navbar />
+
     <main className={styles.main}>
-      
       <MyForm />
     </main>
+    </BrowserRouter>
   );
 }
 
