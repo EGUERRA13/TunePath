@@ -23,9 +23,8 @@ function MyForm() {
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-
+    alert(request)
   }
-
 
   return (
     <form onSubmit={handleSubmit}>
