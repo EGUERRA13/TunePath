@@ -5,8 +5,17 @@ import { useState } from 'react'
 import { BrowserRouter } from "react-router-dom"
 import Navbar from './navbar'
 
+import { run } from "./geminiapi"
+
+
 
 export default function Home() {
+  run();
+  
+
+
+
+
   return (    
     <BrowserRouter>
       <Navbar />
@@ -24,7 +33,8 @@ function MyForm() {
   const handleSubmit = (event) =>{
     event.preventDefault();
     alert(request)
-    
+
+
   }
 
   return (
