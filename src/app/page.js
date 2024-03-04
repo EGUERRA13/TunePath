@@ -5,17 +5,17 @@ import { useState } from 'react'
 import { BrowserRouter } from "react-router-dom"
 import Navbar from './navbar'
 
-import { run } from "./geminiapi"
+import ReactFlow, { ReactFlowProvider } from 'reactflow';
+import 'reactflow/dist/style.css';
+
+import { RunGemini } from "./geminiapi"
 
 
 
 export default function Home() {
-  run();
   
-
-
-
-
+  
+  
   return (    
     <BrowserRouter>
       <Navbar />
@@ -29,14 +29,17 @@ export default function Home() {
 
 function MyForm() {
   const [request, setRequest] = useState("");
+  const [responseData, setResponseData] = useState("");
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-    alert(request)
-
-
+    (async () => {
+      setResponseData(await RunGemini(request))
+    })()
+    
+    console.log(responseData);
+    setRequest('')
   }
-
   return (
     <form onSubmit={handleSubmit}>
       <label>Enter the name of an artist:
@@ -47,6 +50,7 @@ function MyForm() {
         />
       </label>
       <input type="submit" />
+      <textarea readOnly rows={30} value={responseData}></textarea>
     </form>
   )
 }
