@@ -18,7 +18,11 @@ export function ParseGeminiResponse(geminiResponse){
     console.log("TEST1");
 
     while (endofLoop == false) {
-        if (lineArray[i].includes("Start with:") ){
+        if (lineArray[i].includes("*End of Flowchart Response*")){
+            flowchartNodes[nodeCount] = albNode;
+            endofLoop = true;
+        }
+        else if (lineArray[i].includes("Start with:") ){
             nodeCount = nodeCount + 1;
             const tempName = lineArray[i].match(new RegExp('"' + "(.*)" + '"'));
             let albumName = tempName[1];
@@ -28,7 +32,7 @@ export function ParseGeminiResponse(geminiResponse){
             albNode["edgeCount"] = 0;
             flowchartNodes[nodeCount] = albNode;
 
-        }else if (lineArray[i].includes("* **")){
+        }else if (lineArray[i].includes("* **") && lineArray[i].charAt(0) == '*'){
             let currEdgeCount = albNode.edgeCount + 1;
             albNode["edgeCount"] = currEdgeCount;
             console.log("I MADE IT HERE")
@@ -38,23 +42,29 @@ export function ParseGeminiResponse(geminiResponse){
             let edgeDesc = tempDesc[1]
             edgeDesc = edgeDesc.substring(2, tempDesc[1].length - 1) + "?";
             console.log(edgeDesc);
-            const tempEdgeAlbum = lineArray[i].match(new RegExp('Go to "' + "(.*)" + '" '));
-            let edgeAlbum = tempEdgeAlbum[1];
-            albNode["edgeDesc" + currEdgeCount ] =  edgeDesc;
-            albNode["edgeAlbum" + currEdgeCount] =  edgeAlbum;
+            const tempEdgeAlbum = lineArray[i].match(new RegExp('Go to ' + "(.*)" + ' '));
+            if (tempEdgeAlbum){
+                let edgeAlbum = tempEdgeAlbum[1];
+                console.log(edgeAlbum);
+                albNode["edgeDesc" + currEdgeCount ] =  edgeDesc;
+                albNode["edgeAlbum" + currEdgeCount] =  edgeAlbum;
+            }else{
+                let edgeAlbum = "errornodetonowhere"
+                albNode["edgeDesc" + currEdgeCount ] =  edgeDesc;
+                albNode["edgeAlbum" + currEdgeCount] =  edgeAlbum;
+
+            }
 
         }else if(lineArray[i].includes("**Next Node Album: ")){
             flowchartNodes[nodeCount] = albNode;
             nodeCount = nodeCount + 1;
-            let tempAlbumName = lineArray[i].match(new RegExp('Next Node Album:' + "(.*)" + '('));
-            albumName = tempAlbumName[1];
+            let tempAlbumName = lineArray[i].match(new RegExp(' ' + "(.*)" + ' '));
+            let albumName = tempAlbumName[1];
+            console.log(albumName);
             albNode = new Object();
             albNode["albumName"] = albumName;
             albNode["edgeCount"] = 0;
 
-        }else if (lineArray[i].includes("*End of Flowchart Response*")){
-            flowchartNodes[nodeCount] = albNode;
-            endofLoop = true;
         }
         i = i + 1;
     }
