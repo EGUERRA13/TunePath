@@ -1,4 +1,4 @@
-
+import { ParseGeminiResponse } from "./parseresponse";
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Access your API key as an environment variable (see "Set up your API key" above)
@@ -13,6 +13,8 @@ export async function RunGemini(artistName) {
   const result = await model.generateContent(prompt);
   const response = await result.response;
   const text = response.text();
+  ParseGeminiResponse(text);
+
   return text;
 }
 
