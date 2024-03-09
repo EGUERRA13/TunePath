@@ -1,12 +1,9 @@
 
 export function ParseGeminiResponse(geminiResponse){
     const flowchartNodes = [];
-    //const AlbumNode = {albumName:"", edgeDesc1:"", edgeAlbum1:"", edgeCount: 0}; 
     const lineArray = geminiResponse.split('\n');
+    //const AlbumNode = {albumName:"", edgeDesc1:"", edgeAlbum1:"", edgeCount: 0}; 
 
-    const str ="red orange yellow green blue"
-    const result = str.match(new RegExp('red' + "(.*)" + 'blue'));
-    console.log(result[1]);
     console.log(lineArray[0]);
     console.log(lineArray[1]);
     console.log(lineArray[2]);
@@ -15,7 +12,6 @@ export function ParseGeminiResponse(geminiResponse){
     let endofLoop = false;
     let i = 2
     let albNode = new Object()
-    console.log("TEST1");
 
     while (endofLoop == false) {
         if (lineArray[i].includes("*End of Flowchart Response*")){
@@ -60,6 +56,7 @@ export function ParseGeminiResponse(geminiResponse){
             nodeCount = nodeCount + 1;
             let tempAlbumName = lineArray[i].match(new RegExp(' ' + "(.*)" + ' '));
             let albumName = tempAlbumName[1];
+            albumName = albumName.substring(12, albumName.length);
             console.log(albumName);
             albNode = new Object();
             albNode["albumName"] = albumName;
@@ -69,7 +66,6 @@ export function ParseGeminiResponse(geminiResponse){
         i = i + 1;
     }
     console.log(flowchartNodes);
-    console.log("TEST2");
 
 
 
@@ -114,6 +110,7 @@ export function ParseGeminiResponse(geminiResponse){
     }
     console.log(flowchartNodes);
     */
+    return flowchartNodes;
 
 
 

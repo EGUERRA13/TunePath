@@ -5,16 +5,30 @@ import { useState } from 'react'
 import { BrowserRouter } from "react-router-dom"
 import Navbar from './navbar'
 
-import ReactFlow, { ReactFlowProvider } from 'reactflow';
+import React from 'react';
+import ReactFlow from 'reactflow';
 import 'reactflow/dist/style.css';
+import styless from './flow.module.css';
 
 import { RunGemini } from "./geminiapi"
+
+const initialNodes = [
+  { 
+      id: '1', 
+      position: { x: 100, y: 100 }, 
+      data: { label: 'Node 1' } 
+  },
+  { 
+      id: '2', 
+      position: { x: 100, y: 200 }, 
+      data: { label: 'Node 2' } 
+  },
+];
+const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
 
 
 export default function Home() {
-  
-  
   
   return (    
     <BrowserRouter>
@@ -23,6 +37,14 @@ export default function Home() {
     <main className={styles.main}>
       <MyForm />
     </main>
+    <div className={styless.flow}>
+      <ReactFlow 
+        nodes={initialNodes}
+        edges={initialEdges}
+        panOnDrag={false}
+      />
+    </div>
+    
     </BrowserRouter>
   );
 }
@@ -34,10 +56,11 @@ function MyForm() {
   const handleSubmit = (event) =>{
     event.preventDefault();
     (async () => {
-      setResponseData(await RunGemini(request))
+      const flowChartArr = await RunGemini(request)
+      setResponseData(flowChartArr[1].albumName);
     })()
     
-    console.log(responseData);
+    //console.log(responseData);
     setRequest('')
   }
   return (
