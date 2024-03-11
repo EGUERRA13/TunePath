@@ -4,9 +4,7 @@ export function ParseGeminiResponse(geminiResponse){
     const lineArray = geminiResponse.split('\n');
     //const AlbumNode = {albumName:"", edgeDesc1:"", edgeAlbum1:"", edgeCount: 0}; 
 
-    console.log(lineArray[0]);
-    console.log(lineArray[1]);
-    console.log(lineArray[2]);
+    console.log(lineArray);
 
     let nodeCount = 0
     let endofLoop = false;
@@ -43,7 +41,7 @@ export function ParseGeminiResponse(geminiResponse){
                 let edgeAlbum = tempEdgeAlbum[1];
                 console.log(edgeAlbum);
                 albNode["edgeDesc" + currEdgeCount ] =  edgeDesc;
-                albNode["edgeAlbum" + currEdgeCount] =  edgeAlbum;
+                albNode["edgeAlbum" + currEdgeCount] =  edgeAlbum.substring(1,edgeAlbum.length-1);
             }else{
                 let edgeAlbum = "errornodetonowhere"
                 albNode["edgeDesc" + currEdgeCount ] =  edgeDesc;
