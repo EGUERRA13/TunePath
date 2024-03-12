@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom"
 import Navbar from './navbar'
 
 import React from 'react';
-import ReactFlow, { useNodesState, useEdgesState, useNodes, ReactFlowProvider } from 'reactflow';
+import ReactFlow, { useNodesState, useEdgesState, useNodes, ReactFlowProvider, Controls } from 'reactflow';
 import 'reactflow/dist/style.css';
 import flstyles from './flow.module.css';
 
@@ -29,6 +29,10 @@ const initialNodes = [
 const initialEdges = [
   /*{ id: 'e1-2', source: '1', target: '2' }
 */];
+
+const getNodeId = () => `${String(+new Date()).slice(6)}`;
+let globalID = 10000
+let globalLabel = ''
 
 
 
@@ -58,6 +62,8 @@ function MyForm() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  const CheckForNodes = useNodes();
+
   function FlowChartConstructor(ArrOfNodes){
     let nodeArr = ArrOfNodes;
     const nodeMap = new Map();
@@ -69,7 +75,9 @@ function MyForm() {
       source = idCount;
        
       if ((nodeMap.has(nodeArr[i].albumName)) == false){
-        const node = {id: idCount, position: { x: 100, y: (i*100) }, data: { label: nodeArr[i].albumName} }
+        
+        globalLabel = nodeArr[i].albumName
+        const node = {id: idCount.toString(), position: { x: 100, y: nodeMap.size * 100 }, data: { label: nodeArr[i].albumName} }
         nodeMap.set(nodeArr[i].albumName, idCount);
         console.log("ADDING NODE " + nodeArr[i].albumName + " SINCE NODE DOESNT ALREADY EXIST");
         setNodes((nds) => nds.concat(node));
@@ -82,7 +90,7 @@ function MyForm() {
           if (nodeMap.has(edgeNode) == false){
             target = idCount;
             nodeMap.set(edgeNode, idCount);
-            const newNode = {id: idCount, position: { x: 100, y: ((i+j)*100) }, data: { label: edgeNode} }
+            const newNode = {id: idCount.toString(), position: { x: j*100, y: nodeMap.size * 100}, data: { label: edgeNode} }
             console.log("ADDING NODE " + edgeNode + " AS AN EDGE NODE")
             setNodes((nds) => nds.concat(newNode));
             idCount = idCount + 1;
@@ -107,7 +115,7 @@ function MyForm() {
           if (nodeMap.has(edgeNode) == false){
             target = idCount;
             nodeMap.set(edgeNode, idCount);
-            const newNode = {id: idCount, position: { x: 100, y: ((i+j)*100) }, data: { label: edgeNode} }
+            const newNode = {id: idCount.toString(), position: { x: j*100, y: nodeMap.size * 100 }, data: { label: edgeNode} }
             console.log("ADDING NODE " + edgeNode + " AS AN EDGE NODE")
             setNodes((nds) => nds.concat(newNode));
             idCount = idCount + 1;
@@ -143,13 +151,27 @@ function MyForm() {
     setRequest('')
   }
 
-  const CheckForNodes = useNodes();
+  
   console.log(CheckForNodes.length + 'before');
+
+  const onAdd = (myData) => {
+    const id = getNodeId();
+    const newNode = {
+      id,
+      data: { label: myData },
+      position: {
+        x: 0,
+        y: 0 + (nodes.length + 1) * 20
+      }
+    };
+    setNodes((nds) => nds.concat(newNode));
+  };
+
   
   
   return (
   
-    <form onSubmit={handleSubmit}>
+    <div>
       <label>Enter the name of an artist:
         <input
           type="text" 
@@ -157,18 +179,25 @@ function MyForm() {
           onChange={(e) => setRequest(e.target.value)}
         />
       </label>
-      <input type="submit" />
-      <textarea readOnly rows={30} value={CheckForNodes.length + "after"}></textarea>
+      <button onClick={handleSubmit}>
+        Generate Flowchart
+      </button>
+      <button onClick={onAdd}>
+        button 2
+      </button>
+      <textarea readOnly rows={30} value={CheckForNodes.length + "after " + CheckForNodes}></textarea>
         <div className={flstyles.flow}>
           <ReactFlow 
             nodes={nodes}
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
-            panOnDrag={false}
-          />
+            
+          >
+            <Controls />
+          </ReactFlow >
       </div>
-    </form>
+    </div>
 
   )
 }
