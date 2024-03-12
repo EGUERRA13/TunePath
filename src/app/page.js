@@ -72,7 +72,7 @@ function MyForm() {
     let target = "";
   
     for (let i = 1; i < nodeArr.length; i++){
-      source = idCount;
+      source = idCount.toString();
        
       if ((nodeMap.has(nodeArr[i].albumName)) == false){
         
@@ -88,7 +88,7 @@ function MyForm() {
           let stringName = "edgeAlbum" + j;
           const edgeNode = nodeArr[i][stringName];
           if (nodeMap.has(edgeNode) == false){
-            target = idCount;
+            target = idCount.toString();
             nodeMap.set(edgeNode, idCount);
             const newNode = {id: idCount.toString(), position: { x: j*100, y: nodeMap.size * 100}, data: { label: edgeNode} }
             console.log("ADDING NODE " + edgeNode + " AS AN EDGE NODE")
@@ -99,7 +99,7 @@ function MyForm() {
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE NEW NODE")
             setEdges((eds) => eds.concat(edge));
           }else{
-            target = nodeMap.get(edgeNode);
+            target = nodeMap.get(edgeNode).toString();
             const edgeId = 'e' + source + '-' + target;
             const edge = {id: edgeId, source: source, target: target }
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE ALREADY EXISTING NODE")
@@ -107,13 +107,14 @@ function MyForm() {
           }
         }
       }else{
-        source = nodeMap.get(nodeArr[i].albumName);
+        let sourceID = nodeMap.get(nodeArr[i].albumName);
+        source = sourceID.toString();
         const edgeCount = nodeArr[i].edgeCount;
         for (let j=1; j <= edgeCount;j++){
           let stringName = "edgeAlbum" + j;
           const edgeNode = nodeArr[i][stringName];
           if (nodeMap.has(edgeNode) == false){
-            target = idCount;
+            target = idCount.toString();
             nodeMap.set(edgeNode, idCount);
             const newNode = {id: idCount.toString(), position: { x: j*100, y: nodeMap.size * 100 }, data: { label: edgeNode} }
             console.log("ADDING NODE " + edgeNode + " AS AN EDGE NODE")
@@ -124,7 +125,7 @@ function MyForm() {
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE NEW NODE")
             setEdges((eds) => eds.concat(edge));
           }else{
-            target = nodeMap.get(edgeNode);
+            target = nodeMap.get(edgeNode).toString();
             const edgeId = 'e' + source + '-' + target;
             const edge = {id: edgeId, source: source, target: target }
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE ALREADY EXISTING NODE")
@@ -185,7 +186,7 @@ function MyForm() {
       <button onClick={onAdd}>
         button 2
       </button>
-      <textarea readOnly rows={30} value={CheckForNodes.length + "after " + CheckForNodes}></textarea>
+      <textarea readOnly rows={30} value={CheckForNodes.length + " NODES CURRENTLY:" + CheckForNodes + " AND ALSO CURRENTLY " + edges.length + " EDGES"}></textarea>
         <div className={flstyles.flow}>
           <ReactFlow 
             nodes={nodes}
