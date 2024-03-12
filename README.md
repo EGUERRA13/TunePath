@@ -1,6 +1,9 @@
 ## to do list
 
 * implement dynamic force layout
+* style nodes
+* add edge descriptions to edges
+* make edges directional
 * make edges of nodes appear
 * implement wrapper api call text around user input text 
 * implement unit testing
