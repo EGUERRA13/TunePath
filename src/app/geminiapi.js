@@ -8,7 +8,8 @@ export async function RunGemini(artistName) {
   // For text-only input, use the gemini-pro model
   const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
-  const prompt = `Can you construct a flowchart using text for the musical artist ` + artistName + `'s discography. 
+  const prompt = `Can you construct an album flowchart using text for the musical artist ` + artistName + `'s album discography.
+Please limit it to including albums only. No singles. Collab albums are okay, just don't include albums that this artist is barely featured in.
 Start at the most noob friendly album then branch out according to mood and preferences.
 Follow the structure exactly like the example response below created for Nirvana's discography. Be sure to copy even the placement of the asterisks.
 When an edge leads to nowhere just put "End here" like the example below. Follow the structure exactly, only changing the information. Always make sure to end 

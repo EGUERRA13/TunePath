@@ -6,39 +6,20 @@ import { BrowserRouter } from "react-router-dom"
 import Navbar from './navbar'
 
 import React from 'react';
-import ReactFlow, { useNodesState, useEdgesState, useNodes, ReactFlowProvider, Controls } from 'reactflow';
+import ReactFlow, { useNodesState, useEdgesState, useNodes, ReactFlowProvider, Controls, MarkerType } from 'reactflow';
 import 'reactflow/dist/style.css';
 import flstyles from './flow.module.css';
 
 import { RunGemini } from "./geminiapi"
 
 const initialNodes = [
-  /*
-  { 
-      id: '1', 
-      position: { x: 100, y: 100 }, 
-      data: { label: 'Node 1' } 
-  },
-  { 
-      id: '2', 
-      position: { x: 100, y: 200 }, 
-      data: { label: 'Node 2' } 
-  },
-  */
 ];
 const initialEdges = [
-  /*{ id: 'e1-2', source: '1', target: '2' }
-*/];
-
-const getNodeId = () => `${String(+new Date()).slice(6)}`;
-let globalID = 10000
-let globalLabel = ''
-
+];
 
 
 export default function Home() {
 
-  
   
   return (    
     <BrowserRouter>
@@ -76,7 +57,6 @@ function MyForm() {
        
       if ((nodeMap.has(nodeArr[i].albumName)) == false){
         
-        globalLabel = nodeArr[i].albumName
         const node = {id: idCount.toString(), position: { x: 100, y: nodeMap.size * 100 }, data: { label: nodeArr[i].albumName} }
         nodeMap.set(nodeArr[i].albumName, idCount);
         console.log("ADDING NODE " + nodeArr[i].albumName + " SINCE NODE DOESNT ALREADY EXIST");
@@ -86,6 +66,8 @@ function MyForm() {
         const edgeCount = nodeArr[i].edgeCount;
         for (let j=1; j <= edgeCount;j++){
           let stringName = "edgeAlbum" + j;
+          let edgeName = "edgeDesc" + j;
+          const edgeDesc = nodeArr[i][edgeName] 
           const edgeNode = nodeArr[i][stringName];
           if (nodeMap.has(edgeNode) == false){
             target = idCount.toString();
@@ -95,13 +77,29 @@ function MyForm() {
             setNodes((nds) => nds.concat(newNode));
             idCount = idCount + 1;
             const edgeId = 'e' + source + '-' + target;
-            const edge = {id: edgeId, source: source, target: target }
+            const edge = {id: edgeId, source: source, target: target, markerEnd: {
+              type: MarkerType.ArrowClosed,
+              width: 20,
+              height: 20,
+              color: '#FF0072',
+            }, label:edgeDesc.toString() , style: {
+              strokeWidth: 2,
+              stroke: '#FF0072',
+            }, }
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE NEW NODE")
             setEdges((eds) => eds.concat(edge));
           }else{
             target = nodeMap.get(edgeNode).toString();
             const edgeId = 'e' + source + '-' + target;
-            const edge = {id: edgeId, source: source, target: target }
+            const edge = {id: edgeId, source: source, target: target, markerEnd: {
+              type: MarkerType.ArrowClosed,
+              width: 20,
+              height: 20,
+              color: '#FF0072',
+            }, label:edgeDesc.toString() , style: {
+              strokeWidth: 2,
+              stroke: '#FF0072',
+            },  }
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE ALREADY EXISTING NODE")
             setEdges((eds) => eds.concat(edge));
           }
@@ -112,6 +110,8 @@ function MyForm() {
         const edgeCount = nodeArr[i].edgeCount;
         for (let j=1; j <= edgeCount;j++){
           let stringName = "edgeAlbum" + j;
+          let edgeName = "edgeDesc" + j;
+          const edgeDesc = nodeArr[i][edgeName] 
           const edgeNode = nodeArr[i][stringName];
           if (nodeMap.has(edgeNode) == false){
             target = idCount.toString();
@@ -121,13 +121,29 @@ function MyForm() {
             setNodes((nds) => nds.concat(newNode));
             idCount = idCount + 1;
             const edgeId = 'e' + source + '-' + target;
-            const edge = {id: edgeId, source: source, target: target }
+            const edge = {id: edgeId, source: source, target: target, markerEnd: {
+              type: MarkerType.ArrowClosed,
+              width: 20,
+              height: 20,
+              color: '#FF0072',
+            }, label:edgeDesc.toString() , style: {
+              strokeWidth: 2,
+              stroke: '#FF0072',
+            },  }
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE NEW NODE")
             setEdges((eds) => eds.concat(edge));
           }else{
             target = nodeMap.get(edgeNode).toString();
             const edgeId = 'e' + source + '-' + target;
-            const edge = {id: edgeId, source: source, target: target }
+            const edge = {id: edgeId, source: source, target: target, markerEnd: {
+              type: MarkerType.ArrowClosed,
+              width: 20,
+              height: 20,
+              color: '#FF0072',
+            }, label:edgeDesc.toString() , style: {
+              strokeWidth: 2,
+              stroke: '#FF0072',
+            },  }
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE ALREADY EXISTING NODE")
             setEdges((eds) => eds.concat(edge));
           }
