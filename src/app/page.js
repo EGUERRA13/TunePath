@@ -154,22 +154,7 @@ function MyForm() {
 
   
   console.log(CheckForNodes.length + 'before');
-
-  const onAdd = (myData) => {
-    const id = getNodeId();
-    const newNode = {
-      id,
-      data: { label: myData },
-      position: {
-        x: 0,
-        y: 0 + (nodes.length + 1) * 20
-      }
-    };
-    setNodes((nds) => nds.concat(newNode));
-  };
-
-  
-  
+ 
   return (
   
     <div>
@@ -182,9 +167,6 @@ function MyForm() {
       </label>
       <button onClick={handleSubmit}>
         Generate Flowchart
-      </button>
-      <button onClick={onAdd}>
-        button 2
       </button>
       <textarea readOnly rows={30} value={CheckForNodes.length + " NODES CURRENTLY:" + CheckForNodes + " AND ALSO CURRENTLY " + edges.length + " EDGES"}></textarea>
         <div className={flstyles.flow}>

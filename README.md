@@ -1,6 +1,7 @@
 ## to do list
 
 * implement dynamic force layout
+* fix errornodetonowhere node so that source node just leads to stay here
 * style nodes
 * add edge descriptions to edges
 * make edges directional
@@ -11,6 +12,7 @@
 * edge case for artists doesnt exist
 * add api called album images to nodes
 * refactor components
+* add helpful comments
 * stylize the ui 
 * web responsive ui
 * animated loading symbol during api call and flowchart generation
