@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom"
 import Navbar from './navbar'
 
 import React from 'react';
-import ReactFlow, { useNodesState, useEdgesState, useNodes, ReactFlowProvider, Controls, MarkerType, useReactFlow } from 'reactflow';
+import ReactFlow, { useNodesState, useEdgesState, useNodes, ReactFlowProvider, Controls, MarkerType } from 'reactflow';
 import 'reactflow/dist/style.css';
 import flstyles from './flow.module.css';
 
@@ -43,10 +43,8 @@ function MyForm() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const [reactFlowInstance, setReactFlowInstance] = useState(null);
-
   const CheckForNodes = useNodes();
-  const reactFlow = useReactFlow();
+
 
   function FlowChartConstructor(ArrOfNodes){
     let nodeArr = ArrOfNodes;
@@ -153,12 +151,7 @@ function MyForm() {
         }
       }
     }
-    //setTimeout(reactFlow.fitView());
   }
-
-
-
-
 
 
   const handleSubmit = (event) =>{
@@ -172,11 +165,7 @@ function MyForm() {
     setRequest('')
   }
 
-
-
-
-
- 
+  
   return (
   
     <div>

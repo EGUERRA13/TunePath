@@ -65,51 +65,5 @@ export function ParseGeminiResponse(geminiResponse){
     }
     console.log(flowchartNodes);
 
-
-
-
-    /*
-    let albumName = "";
-    let nodeCount = 0;
-    let variableName = "albNode";
-    let endofLoop = false;
-    let i = 2
-   
-
-    while (endofLoop == false) {
-        if (lineArray[i].includes("Start with:") ){
-            nodeCount = nodeCount + 1;
-            albumName = str.match(new RegExp('"' + "(.*)" + '"'));
-            eval('const ' + variableName + nodeCount + ' = ' + new Object() + ';');
-            eval(variableName + nodeCount + '[albumName] = ' + albumName + ';');
-            eval(variableName + nodeCount + '[edgeCount] = ' + "0" + ';');
-
-        }else if (lineArray[i].includes("* **")){
-            let currEdgeCount = eval(variableName + nodeCount + '.edgeCount') + 1;
-            eval(variableName + nodeCount + '[edgeCount] = ' + currEdgeCount + ';');
-            edgeDesc = str.match(new RegExp('* **' + "(.*)" + ':**'));
-            edgeAlbum = str.match(new RegExp('Go to "' + "(.*)" + '" '));
-            eval(variableName + nodeCount + '[edgeDesc' + currEdgeCount + '] = ' + edgeDesc + ';');
-            eval(variableName + nodeCount + '[edgeAlbum' + currEdgeCount + '] = ' + edgeAlbum + ';');
-
-        }else if(lineArray[i.includes("**Next Node Album: ")]){
-            flowchartNodes.push(eval(variableName + nodeCount));
-            nodeCount = nodeCount + 1;
-            albumName = str.match(new RegExp('Next Node Album:' + "(.*)" + '('));
-            eval('const ' + variableName + nodeCount + '= ' + Object.create(AlbumNode) + ';');
-            eval(variableName + nodeCount + '[albumName] = ' + albumName + ';');
-            eval(variableName + nodeCount + '[edgeCount] = ' + "0" + ';');
-
-        }else if (lineArray[i].includes("*End of Flowchart Response*")){
-            flowchartNodes.push(eval(variableName + nodeCount));
-            endofLoop = true;
-        }
-        i = i + 1;
-    }
-    console.log(flowchartNodes);
-    */
     return flowchartNodes;
-
-
-
 }
