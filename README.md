@@ -1,7 +1,9 @@
 ## to do list
 
 * implement dynamic force layout
-* fix errornodetonowhere node so that source node just leads to stay here
+* fix errornodetonowhere node so that source node just leads to stay here or remove it completely
+* refit to view when flowchart for different input is generated again
+* reword prompt for mainstream/accessible top node album
 * style nodes
 * add edge descriptions to edges
 * make edges directional

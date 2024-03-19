@@ -1,12 +1,13 @@
 "use client"
 
 import styles from "./page.module.css";
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { BrowserRouter } from "react-router-dom"
 import Navbar from './navbar'
+import Dagre from '@dagrejs/dagre';
 
 import React from 'react';
-import ReactFlow, { useNodesState, useEdgesState, useNodes, ReactFlowProvider, Controls, MarkerType } from 'reactflow';
+import ReactFlow, { useNodesState, useEdgesState, useNodes, ReactFlowProvider, Controls, MarkerType, useReactFlow } from 'reactflow';
 import 'reactflow/dist/style.css';
 import flstyles from './flow.module.css';
 
@@ -16,6 +17,26 @@ const initialNodes = [
 ];
 const initialEdges = [
 ];
+
+const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
+
+const getLayoutedElements = (nodes, edges, options) => {
+  g.setGraph({ rankdir: options.direction });
+
+  edges.forEach((edge) => g.setEdge(edge.source, edge.target));
+  nodes.forEach((node) => g.setNode(node.id, node));
+
+  Dagre.layout(g);
+
+  return {
+    nodes: nodes.map((node) => {
+      const { x, y } = g.node(node.id);
+
+      return { ...node, position: { x, y } };
+    }),
+    edges,
+  };
+};
 
 
 export default function Home() {
@@ -37,6 +58,7 @@ export default function Home() {
 
 
 function MyForm() {
+  const { fitView } = useReactFlow();
   const [request, setRequest] = useState("");
   const [responseData, setResponseData] = useState("");
 
@@ -44,6 +66,20 @@ function MyForm() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const CheckForNodes = useNodes();
+
+  const onLayout = useCallback(
+    (direction) => {
+      const layouted = getLayoutedElements(nodes, edges, { direction });
+
+      setNodes([...layouted.nodes]);
+      setEdges([...layouted.edges]);
+
+      window.requestAnimationFrame(() => {
+        fitView();
+      });
+    },
+    [nodes, edges]
+  );
 
 
   function FlowChartConstructor(ArrOfNodes){
@@ -192,6 +228,7 @@ function MyForm() {
             <Controls />
           </ReactFlow >
       </div>
+      <button onClick={() => onLayout('TB')}>vertical layout</button>
     </div>
 
   )
