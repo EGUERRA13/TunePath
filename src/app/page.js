@@ -21,7 +21,7 @@ const initialEdges = [
 const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 
 const getLayoutedElements = (nodes, edges, options) => {
-  g.setGraph({ rankdir: options.direction });
+  g.setGraph({ rankdir: options.direction, nodesep:200, edgesep: 200, ranksep: 200 });
 
   edges.forEach((edge) => g.setEdge(edge.source, edge.target));
   nodes.forEach((node) => g.setNode(node.id, node));
@@ -69,6 +69,7 @@ function MyForm() {
 
   const onLayout = useCallback(
     (direction) => {
+      console.log("RUNNING ON LAYOUT");
       const layouted = getLayoutedElements(nodes, edges, { direction });
 
       setNodes([...layouted.nodes]);
@@ -82,7 +83,7 @@ function MyForm() {
   );
 
 
-  function FlowChartConstructor(ArrOfNodes){
+  async function FlowChartConstructor(ArrOfNodes){
     let nodeArr = ArrOfNodes;
     const nodeMap = new Map();
     let idCount = 1;
@@ -196,10 +197,21 @@ function MyForm() {
       const flowChartArr = await RunGemini(request)
       setResponseData(flowChartArr[1].albumName);
       console.log(flowChartArr.length + "LENGTH OF THE ARRAY CONTAINING NODE OBJECTS INSIDE THE FUNC");
-      FlowChartConstructor(flowChartArr);
+      const TB = await FlowChartConstructor(flowChartArr);
+      console.log("got out");
+      
+      
+      console.log('after');
+      
     })()
     setRequest('')
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      onLayout('TB'); // Call onLayout after a short delay
+    }, 5); // Adjust timeout as needed
+  }, [nodes, edges]);
 
   
   return (
@@ -228,7 +240,6 @@ function MyForm() {
             <Controls />
           </ReactFlow >
       </div>
-      <button onClick={() => onLayout('TB')}>vertical layout</button>
     </div>
 
   )
