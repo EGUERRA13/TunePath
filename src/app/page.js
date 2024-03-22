@@ -23,7 +23,7 @@ const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 const getLayoutedElements = (nodes, edges, options) => {
   g.setGraph({ rankdir: options.direction, nodesep:200, edgesep: 200, ranksep: 200 });
 
-  edges.forEach((edge) => g.setEdge(edge.source, edge.target));
+  edges.forEach((edge) => g.setEdge(edge.source, edge.target, { label: edge.label }));
   nodes.forEach((node) => g.setNode(node.id, node));
 
   Dagre.layout(g);
