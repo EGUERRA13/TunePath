@@ -10,7 +10,7 @@ export async function RunGemini(artistName) {
 
   const prompt = `Can you construct an album flowchart using text for the musical artist ` + artistName + `'s album discography.
 Please limit it to including albums only. No singles. Collab albums are okay, just don't include albums that this artist is barely featured in.
-Start at the most noob friendly album then branch out according to mood and preferences.
+Start at the most noob friendly and accessible album then branch out according to mood and preferences.
 Follow the structure exactly like the example response below created for Nirvana's discography. Be sure to copy even the placement of the asterisks.
 When an edge leads to nowhere just put "End here" like the example below. Follow the structure exactly, only changing the information. Always make sure to end 
 the flowchart with **End of Flowchart Response** just like the example below.

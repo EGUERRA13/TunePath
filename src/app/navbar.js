@@ -15,7 +15,7 @@ const Navbar = () => {
           <div className={styles.navelements}>
             <ul>
               <li>
-                <Link href="/">Discography Flowchart</Link>
+                <Link href="/flowchart">Discography Flowchart</Link>
               </li>
               <li>
                 <Link href="/imagetomusic">Image To Music</Link>
