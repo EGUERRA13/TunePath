@@ -197,12 +197,7 @@ function MyForm() {
       const flowChartArr = await RunGemini(request)
       setResponseData(flowChartArr[1].albumName);
       console.log(flowChartArr.length + "LENGTH OF THE ARRAY CONTAINING NODE OBJECTS INSIDE THE FUNC");
-      const TB = await FlowChartConstructor(flowChartArr);
-      console.log("got out");
-      
-      
-      console.log('after');
-      
+      await FlowChartConstructor(flowChartArr);
     })()
     setRequest('')
   }
@@ -210,7 +205,7 @@ function MyForm() {
   useEffect(() => {
     setTimeout(() => {
       onLayout('TB'); // Call onLayout after a short delay
-    }, 5); // Adjust timeout as needed
+    }, 15); // Adjust timeout as needed
   }, [nodes, edges]);
 
   
