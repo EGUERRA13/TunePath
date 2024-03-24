@@ -201,11 +201,13 @@ function MyForm() {
     setRequest('')
   }
 
+  //functions called after nodes and edges are created
   useEffect(() => {
+    //calls layout after 15 ms to allow for nodes and egdes to load first
     setTimeout(() => {
       onLayout('TB');
-       // Call onLayout after a short delay
     }, 15);
+    //calls fit view with greater delay to ensure laid out flowchart will be fit to screen
     setTimeout(() => {
       window.requestAnimationFrame(() => {
         fitView();

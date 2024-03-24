@@ -6,6 +6,8 @@
 * refit to view when flowchart for different input is generated again
 * reword prompt for mainstream/accessible top node album
 * style nodes
+* set max num of albums in ai prompt
+* use discog api to add album images to nodes
 * add edge descriptions to edges
 * make edges directional
 * make edges of nodes appear
@@ -22,3 +24,4 @@
 * home page where user enters their own api key 
 * image to music page
 * potentially allow unique users to store their search history
+
