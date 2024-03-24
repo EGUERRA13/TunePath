@@ -107,7 +107,7 @@ function MyForm() {
           let edgeName = "edgeDesc" + j;
           const edgeDesc = nodeArr[i][edgeName] 
           const edgeNode = nodeArr[i][stringName];
-          if (nodeMap.has(edgeNode) == false){ //making sure the edge album is not an album already found
+          if (nodeMap.has(edgeNode) == false && edgeNode !='errornodetonowhere'){ //making sure the edge album is not an album already found
             target = idCount.toString(); 
             nodeMap.set(edgeNode, idCount); //adds the edge album to node map
             const newNode = {id: idCount.toString(), position: { x: j*100, y: nodeMap.size * 100}, data: { label: edgeNode} }
@@ -126,7 +126,7 @@ function MyForm() {
             }, }
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE NEW NODE")
             setEdges((eds) => eds.concat(edge)); //adds edge as a ReactFlow edge
-          }else{ //code below excecutes when a node already created for an edge album is found
+          }else if (edgeNode !='errornodetonowhere'){ //code below excecutes when a node already created for an edge album is found
             target = nodeMap.get(edgeNode).toString(); //finds the node id of this album
             const edgeId = 'e' + source + '-' + target;
             const edge = {id: edgeId, source: source, target: target, markerEnd: {
@@ -151,7 +151,7 @@ function MyForm() {
           let edgeName = "edgeDesc" + j;
           const edgeDesc = nodeArr[i][edgeName] 
           const edgeNode = nodeArr[i][stringName];
-          if (nodeMap.has(edgeNode) == false){ //checks if edge album doesn't already exist in node map
+          if (nodeMap.has(edgeNode) == false && edgeNode !='errornodetonowhere'){ //checks if edge album doesn't already exist in node map
             target = idCount.toString();
             nodeMap.set(edgeNode, idCount);
             const newNode = {id: idCount.toString(), position: { x: j*100, y: nodeMap.size * 100 }, data: { label: edgeNode} }
@@ -170,7 +170,7 @@ function MyForm() {
             },  }
             console.log("ADDING EDGE FROM " + source + " TO " + target + " SINCE NEW NODE")
             setEdges((eds) => eds.concat(edge)); //adds edge as ReactFlow edge
-          }else{ //edge album node already exists so target will be found in the map
+          }else if (edgeNode !='errornodetonowhere'){ //edge album node already exists so target will be found in the map
             target = nodeMap.get(edgeNode).toString(); //gets target id from node map
             const edgeId = 'e' + source + '-' + target;
             const edge = {id: edgeId, source: source, target: target, markerEnd: {
@@ -203,9 +203,15 @@ function MyForm() {
 
   useEffect(() => {
     setTimeout(() => {
-      onLayout('TB'); // Call onLayout after a short delay
-    }, 15); // Adjust timeout as needed
-  }, [nodes, edges]);
+      onLayout('TB');
+       // Call onLayout after a short delay
+    }, 15);
+    setTimeout(() => {
+      window.requestAnimationFrame(() => {
+        fitView();
+      });
+    }, 30);
+  }, [CheckForNodes.length]);
 
   
   return (
